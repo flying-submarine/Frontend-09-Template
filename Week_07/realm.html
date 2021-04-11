@@ -1,0 +1,326 @@
+<script src="https://gw.alipayobjects.com/os/lib/antv/g6/3.7.1/dist/g6.min.js"></script>
+<div id='container'></div>
+<script>
+  const data = {
+  isRoot: true,
+  id: 'object',
+  style: {
+    fill: 'red',
+  },
+  children: [
+    {
+      id: 'array',
+      raw: {},
+      children: [
+        {
+          id: 'BigUint64Array',
+        },
+        {
+          id: 'BigInt64Array',
+        },
+        {
+          id: 'Int8Array',
+        },
+        {
+          id: 'Uint8Array',
+        },
+        {
+          id: 'Uint8ClampedArray',
+        },
+        {
+          id: 'Int16Array',
+        },
+        {
+          id: 'Uint16Array',
+        },
+        {
+          id: 'Int32Array',
+        },
+        {
+          id: 'Uint32Array',
+        },
+        {
+          id: 'Float32Array',
+        },
+        {
+          id: 'Float64Array',
+        },
+      ],
+    },
+    {
+      id: 'error',
+      children: [
+        {
+          id: 'TypeError',
+        },
+        {
+          id: 'AggregateError',
+        },
+        {
+          id: 'InternalError',
+        },
+        {
+          id: 'EvalError',
+        },
+        {
+          id: 'RangeError',
+        },
+        {
+          id: 'ReferenceError',
+        },
+        {
+          id: 'SyntaxError',
+        },
+        {
+          id: 'URIError',
+        },
+      ],
+    },
+    {
+      id: 'Infinity',
+    },
+    {
+      id: 'NaN',
+    },
+    {
+      id: 'undefined',
+    },
+    {
+      id: 'globalThis',
+    },
+    {
+      id: 'eval()',
+    },
+    {
+      id: 'uneval()',
+    },
+    {
+      id: 'isFinite()',
+    },
+    {
+      id: 'isNaN()',
+    },
+    {
+      id: 'parseFloat()',
+    },
+    {
+      id: 'parseInt()',
+    },
+    {
+      id: 'decodeURI()',
+    },
+    {
+      id: 'decodeURIComponent()',
+    },
+    {
+      id: 'encodeURI()',
+    },
+    {
+      id: 'encodeURIComponent()',
+    },
+    {
+      id: 'Number',
+    },
+    {
+      id: 'BigInt',
+    },
+    {
+      id: 'Math',
+    },
+    {
+      id: 'Date',
+    },
+    {
+      id: 'String',
+    },
+    {
+      id: 'RegExp',
+    },
+    {
+      id: 'Map',
+    },
+    {
+      id: 'Set',
+    },
+    {
+      id: 'WeakMap',
+    },
+    {
+      id: 'WeakSet',
+    },
+    {
+      id: 'ArrayBuffer',
+    },
+    {
+      id: 'SharedArrayBuffer',
+    },
+    {
+      id: 'DataView',
+    },
+    {
+      id: 'JSON',
+    },
+    {
+      id: 'Atomics',
+    },
+    {
+      id: 'Promise',
+    },
+    {
+      id: 'Generator',
+    },
+    {
+      id: 'GeneratorFunction',
+    },
+    {
+      id: 'AsyncFunction',
+    },
+    {
+      id: 'Reflect',
+    },
+    {
+      id: 'Proxy',
+    },
+    {
+      id: 'JSON',
+    },
+    {
+      id: 'Intl',
+    },
+    {
+      id: 'Intl.Collator',
+    },
+    {
+      id: 'Intl.DateTimeFormat',
+    },
+    {
+      id: 'Intl.ListFormat',
+    },
+    {
+      id: 'Intl.NumberFormat',
+    },
+    {
+      id: 'Intl.PluralRules',
+    },
+    {
+      id: 'Intl.RelativeTimeFormat',
+    },
+    {
+      id: 'Intl.Locale',
+    },
+    {
+      id: 'WebAssembly',
+    },
+    {
+      id: 'WebAssembly.Module',
+    },
+    {
+      id: 'WebAssembly.Instance',
+    },
+    {
+      id: 'WebAssembly.Memory',
+    },
+    {
+      id: 'WebAssembly.Table',
+    },
+    {
+      id: 'WebAssembly.CompileError',
+    },
+    {
+      id: 'WebAssembly.LinkError (en-US)',
+    },
+    {
+      id: 'WebAssembly.RuntimeError',
+    },
+    {
+      id: 'arguments',
+    },
+  ],
+};
+
+const container = document.getElementById('container');
+const width = container.scrollWidth;
+const height = container.scrollHeight || 500;
+const graph = new G6.TreeGraph({
+  container: 'container',
+  width,
+  height,
+  linkCenter: true,
+  modes: {
+    default: [
+      {
+        type: 'collapse-expand',
+        onChange: function onChange(item, collapsed) {
+          const data = item.get('model');
+          data.collapsed = collapsed;
+          return true;
+        },
+      },
+      'drag-canvas',
+      'zoom-canvas',
+    ],
+  },
+  defaultNode: {
+    size: 30,
+  },
+  layout: {
+    type: 'compactBox',
+    direction: 'LR',
+    getId: function getId(d) {
+      return d.id;
+    },
+    getHeight: function getHeight() {
+      return 16;
+    },
+    getWidth: function getWidth() {
+      return 16;
+    },
+    getVGap: function getVGap() {
+      return 10;
+    },
+    getHGap: function getHGap() {
+      return 100;
+    },
+  },
+});
+
+graph.node(function (node) {
+  return {
+    size: 16,
+    anchorPoints: [
+      [0, 0.5],
+      [1, 0.5],
+    ],
+    style: {
+      fill: '#C6E5FF',
+      stroke: '#5B8FF9',
+    },
+    label: node.id,
+    labelCfg: {
+      position: node.children && node.children.length > 0 ? 'left' : 'right',
+      offset: 5,
+    },
+  };
+});
+let i = 0;
+graph.edge(function () {
+  i++;
+  return {
+    type: 'cubic-horizontal',
+    color: '#A3B1BF',
+    label: i,
+  };
+});
+
+graph.data(data);
+graph.render();
+graph.fitView();
+
+if (typeof window !== 'undefined')
+  window.onresize = () => {
+    if (!graph || graph.get('destroyed')) return;
+    if (!container || !container.scrollWidth || !container.scrollHeight) return;
+    graph.changeSize(container.scrollWidth, container.scrollHeight);
+  };
+
+</script>
